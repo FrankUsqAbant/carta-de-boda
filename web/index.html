@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <base href="$FLUTTER_BASE_HREF">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="«Bajo el mismo cielo» - Experiencia conmemorativa de boda para Estefania & Darlin">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#000000">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Estefania & Darlin">
+
+  <title>Estefania & Darlin</title>
+  <link rel="manifest" href="manifest.json">
+
+  <!-- Precarga de recursos clave para arranque instantáneo -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="assets/assets/images/roses/rose_red_1.png" as="image">
+  <link rel="preload" href="assets/assets/images/roses/rose_white_1.png" as="image">
+
+  <!-- Tipografías optimizadas: solo los pesos exactos utilizados en la app -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Cormorant+Garamond:ital,wght@1,400&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: #F9F5EE;
+      position: fixed;
+      inset: 0;
+    }
+
+    /* Preloader cinematográfico nupcial luminoso (0ms latency) */
+    #wedding-splash {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at center, #FFFDF9 0%, #F8F2E8 60%, #EBDDCB 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 999999;
+      transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.65s ease;
+    }
+    #wedding-splash.loaded {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    .splash-container {
+      position: relative;
+      width: 130px;
+      height: 130px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .monogram {
+      font-family: 'Cinzel', serif, Georgia;
+      font-size: 26px;
+      font-weight: 600;
+      letter-spacing: 4px;
+      color: #8C6D3B;
+      text-shadow: 0 0 24px rgba(223, 186, 143, 0.45), 0 1px 4px rgba(0, 0, 0, 0.15);
+      animation: breathText 2.2s ease-in-out infinite;
+      user-select: none;
+    }
+    .splash-ring {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 1px solid rgba(140, 109, 59, 0.35);
+      box-shadow: 0 0 35px rgba(223, 186, 143, 0.30), inset 0 0 15px rgba(212, 175, 55, 0.20);
+      animation: pulseRing 2.2s ease-in-out infinite;
+    }
+    @keyframes pulseRing {
+      0%, 100% { transform: scale(0.92); opacity: 0.45; }
+      50% { transform: scale(1.08); opacity: 0.95; }
+    }
+    @keyframes breathText {
+      0%, 100% { opacity: 0.70; transform: scale(0.97); }
+      50% { opacity: 1; transform: scale(1.03); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Preloader estético inmediato visible mientras el motor compila -->
+  <div id="wedding-splash">
+    <div class="splash-container">
+      <div class="monogram">E &amp; D</div>
+      <div class="splash-ring"></div>
+    </div>
+  </div>
+
+  <script>
+    // Detector de montaje del primer frame de Flutter
+    const observer = new MutationObserver((mutations, obs) => {
+      const flutterView = document.querySelector('flutter-view') || document.querySelector('flt-glass-pane');
+      if (flutterView) {
+        const splash = document.getElementById('wedding-splash');
+        if (splash) {
+          splash.classList.add('loaded');
+          setTimeout(() => splash.remove(), 700);
+        }
+        obs.disconnect();
+      }
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+  </script>
+
+  <script src="flutter_bootstrap.js" async></script>
+</body>
+</html>
